@@ -8,10 +8,10 @@ router.get('/', (req, res) => {
   // find all products
   // be sure to include its associated Category and Tag data
   try {
-    const productsData = Product.findAll({
+    const products = Product.findAll({
       include: [{ model: Category },{ model: Tag }]
     });
-    res.status(200).json(productsData);
+    res.status(200).json(products);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -22,16 +22,16 @@ router.get('/:id', (req, res) => {
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
   try {
-    const singleProductData = Product.findByPk(req.params.id, {
+    const singleProduct = Product.findByPk(req.params.id, {
       include: [{ model: Category },{ model: Tag }]
     });
 
-    if (!singleProductData) {
-      res.status(404).json({ message: 'No Product was found with that id!' });
+    if (!singleProduct) {
+      res.status(404).json({ message: 'Information not found' });
       return;
     }
 
-    res.status(200).json(singleProductData);
+    res.status(200).json(singleProduct);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -114,17 +114,17 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
   try {
-    const singleProductData = Product.destroy({
+    const singleProduct = Product.destroy({
       where: {
         id: req.params.id
       }
     });
 
-    if (!singleProductData) {
-      res.status(404).json({ message: 'No product found with that id!' });
+    if (!singleProduct) {
+      res.status(404).json({ message: 'Information not found' });
       return;
     }
-    res.status(200).json(singleProductData);
+    res.status(200).json(singleProduct);
   } catch (err) {
     res.status(500).json(err);
   }
